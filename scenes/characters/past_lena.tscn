@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://past_lena_scene"]
+
+[ext_resource type="Script" path="res://scripts/characters/past_lena.gd" id="1_past_lena"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_past"]
+size = Vector2(12, 12)
+
+[node name="PastLena" type="CharacterBody2D"]
+visibility_layer = 8
+script = ExtResource("1_past_lena")
+move_speed = 120.0
+era = "past"
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.831, 0.627, 0.337, 1)
+visibility_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_past")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_past")

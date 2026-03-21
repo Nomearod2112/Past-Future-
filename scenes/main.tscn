@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://main_scene"]
+
+[ext_resource type="Script" path="res://scripts/world/world_state.gd" id="1_world"]
+
+[node name="Main" type="Node2D"]
+
+[node name="WorldState" type="Node" parent="."]
+script = ExtResource("1_world")
+
+[node name="SplitScreen" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PastViewportContainer" type="SubViewportContainer" parent="SplitScreen"]
+size_flags_horizontal = 3
+stretch = true
+
+[node name="PastViewport" type="SubViewport" parent="SplitScreen/PastViewportContainer"]
+handle_input_locally = false
+canvas_cull_mask = 11
+size = Vector2i(636, 720)
+render_target_update_mode = 4
+
+[node name="PastCamera" type="Camera2D" parent="SplitScreen/PastViewportContainer/PastViewport"]
+
+[node name="Divider" type="ColorRect" parent="SplitScreen"]
+custom_minimum_size = Vector2(4, 0)
+color = Color(0.941, 0.78, 0.369, 1)
+
+[node name="FutureViewportContainer" type="SubViewportContainer" parent="SplitScreen"]
+size_flags_horizontal = 3
+stretch = true
+
+[node name="FutureViewport" type="SubViewport" parent="SplitScreen/FutureViewportContainer"]
+handle_input_locally = false
+canvas_cull_mask = 21
+size = Vector2i(636, 720)
+render_target_update_mode = 4
+
+[node name="FutureCamera" type="Camera2D" parent="SplitScreen/FutureViewportContainer/FutureViewport"]

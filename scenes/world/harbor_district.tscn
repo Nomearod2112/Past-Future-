@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://harbor_district_scene"]
+
+[node name="HarborDistrict" type="Node2D"]
+
+[node name="SharedTerrain" type="Node2D" parent="."]
+
+[node name="Ground" type="ColorRect" parent="SharedTerrain"]
+visibility_layer = 1
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+color = Color(0.42, 0.55, 0.42, 1)
+
+[node name="PastObjects" type="Node2D" parent="."]
+visibility_layer = 2
+
+[node name="FutureObjects" type="Node2D" parent="."]
+visibility_layer = 4

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://building_scene"]
+
+[ext_resource type="Script" path="res://scripts/world/temporal_object.gd" id="1_temporal"]
+
+[node name="Building" type="Node2D"]
+script = ExtResource("1_temporal")
+object_id = "building_default"
+interaction_verb = "Build"
+
+[node name="PastVisual" type="Sprite2D" parent="."]
+visibility_layer = 2
+modulate = Color(0.831, 0.627, 0.337, 1)
+
+[node name="FutureVisual" type="Sprite2D" parent="."]
+visibility_layer = 4
+modulate = Color(0.478, 0.608, 0.71, 1)
