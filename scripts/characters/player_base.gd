@@ -21,6 +21,15 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	# Handle interact/journal via Input singleton (works inside SubViewports)
+	if Input.is_action_just_pressed(controls.interact):
+		if can_interact_with.size() > 0:
+			_interact_with_nearest()
+
+	if Input.is_action_just_pressed(controls.journal):
+		_toggle_journal()
+
+	# Update interaction prompt
 	var old_prompt := _prompt_text
 	if can_interact_with.size() > 0:
 		var nearest := _get_nearest_interactable()
@@ -37,7 +46,6 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	if _prompt_text != "":
-		# Draw a background behind the text
 		var font := ThemeDB.fallback_font
 		var font_size := 10
 		var text_size := font.get_string_size(_prompt_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
@@ -56,13 +64,6 @@ func _physics_process(_delta: float) -> void:
 	).normalized()
 	velocity = direction * move_speed
 	move_and_slide()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(controls.interact) and can_interact_with.size() > 0:
-		_interact_with_nearest()
-	elif event.is_action_pressed(controls.journal):
-		_toggle_journal()
 
 
 ## Interact with the nearest available temporal object.
