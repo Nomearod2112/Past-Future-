@@ -16,8 +16,10 @@ const HARBOR_DISTRICT := preload("res://scenes/world/harbor_district.tscn")
 
 func _ready() -> void:
 	# Load the harbor district level into both viewports
+	# Add at index 0 so it renders behind the characters
 	var past_level := HARBOR_DISTRICT.instantiate()
 	past_viewport.add_child(past_level)
+	past_viewport.move_child(past_level, 0)
 
 	# Share the same World2D so both viewports render the same world
 	future_viewport.world_2d = past_viewport.world_2d
