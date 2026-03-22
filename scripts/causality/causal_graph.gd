@@ -60,7 +60,7 @@ func _validate(event: CausalEvent) -> bool:
 
 
 ## Check if an event would conflict with locked historical events.
-func _conflicts_with_locked_events(event: CausalEvent) -> bool:
+func _conflicts_with_locked_events(_event: CausalEvent) -> bool:
 	# Locked events cannot be prevented — specific checks per event type
 	# Override in subclass or extend as needed
 	return false
