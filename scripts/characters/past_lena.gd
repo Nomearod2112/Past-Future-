@@ -8,13 +8,13 @@ var blueprint_mode_active: bool = false
 
 func _ready() -> void:
 	era = "past"
-	# Layer 4: Past-Lena
 	visibility_layer = 8
+	super._ready()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	super._unhandled_input(event)
-	if event.is_action_pressed(controls.special):
+func _process(delta: float) -> void:
+	super._process(delta)
+	if Input.is_action_just_pressed(controls.special):
 		_toggle_blueprint_mode()
 
 
