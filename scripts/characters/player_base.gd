@@ -15,6 +15,7 @@ var _prompt_text: String = ""
 
 
 func _ready() -> void:
+	print("[", era, "] PlayerBase._ready() — controls: ", controls, " interact action: ", controls.interact if controls else "NULL")
 	# Connect interaction area signals to detect nearby temporal objects
 	interaction_area.area_entered.connect(_on_interaction_area_entered)
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
@@ -59,6 +60,12 @@ func _draw() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	# Check interact here too since _process may not be called
+	if Input.is_action_just_pressed(controls.interact):
+		print("[", era, "] INTERACT pressed (from physics_process) — nearby: ", can_interact_with.size())
+		if can_interact_with.size() > 0:
+			_interact_with_nearest()
+
 	var direction := Vector2(
 		Input.get_action_strength(controls.move_right) - Input.get_action_strength(controls.move_left),
 		Input.get_action_strength(controls.move_down) - Input.get_action_strength(controls.move_up)
