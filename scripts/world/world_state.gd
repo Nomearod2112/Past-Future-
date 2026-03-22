@@ -13,6 +13,7 @@ var temporal_objects: Dictionary = {}  # object_id -> TemporalObject
 func _ready() -> void:
 	causal_graph = CausalGraph.new()
 	causal_graph.future_delta_computed.connect(_on_future_delta_computed)
+	GameManager.register_world_state(self)
 
 
 ## Register a temporal object with the world state.

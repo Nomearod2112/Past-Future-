@@ -6,14 +6,108 @@
 
 [node name="Ground" type="ColorRect" parent="SharedTerrain"]
 visibility_layer = 1
-offset_left = -500.0
-offset_top = -500.0
-offset_right = 500.0
-offset_bottom = 500.0
-color = Color(0.42, 0.55, 0.42, 1)
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.35, 0.5, 0.35, 1)
+
+[node name="Road" type="ColorRect" parent="SharedTerrain"]
+visibility_layer = 1
+offset_left = -640.0
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = 20.0
+color = Color(0.45, 0.42, 0.38, 1)
+
+[node name="Harbor" type="ColorRect" parent="SharedTerrain"]
+visibility_layer = 1
+offset_left = -640.0
+offset_top = 200.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.25, 0.45, 0.6, 1)
 
 [node name="PastObjects" type="Node2D" parent="."]
+
+[node name="OldHouse" type="ColorRect" parent="PastObjects"]
 visibility_layer = 2
+offset_left = -200.0
+offset_top = -200.0
+offset_right = -120.0
+offset_bottom = -120.0
+color = Color(0.769, 0.486, 0.157, 1)
+
+[node name="OldHouseLabel" type="Label" parent="PastObjects/OldHouse"]
+offset_left = 0.0
+offset_top = -14.0
+offset_right = 80.0
+offset_bottom = 0.0
+text = "House"
+horizontal_alignment = 1
+
+[node name="Dock" type="ColorRect" parent="PastObjects"]
+visibility_layer = 2
+offset_left = -100.0
+offset_top = 160.0
+offset_right = 100.0
+offset_bottom = 200.0
+color = Color(0.55, 0.38, 0.2, 1)
+
+[node name="Tree1" type="ColorRect" parent="PastObjects"]
+visibility_layer = 2
+offset_left = 100.0
+offset_top = -180.0
+offset_right = 130.0
+offset_bottom = -140.0
+color = Color(0.3, 0.55, 0.2, 1)
 
 [node name="FutureObjects" type="Node2D" parent="."]
+
+[node name="Ruins" type="ColorRect" parent="FutureObjects"]
 visibility_layer = 4
+offset_left = -200.0
+offset_top = -200.0
+offset_right = -120.0
+offset_bottom = -120.0
+color = Color(0.5, 0.45, 0.4, 1)
+
+[node name="RuinsLabel" type="Label" parent="FutureObjects/Ruins"]
+offset_left = 0.0
+offset_top = -14.0
+offset_right = 80.0
+offset_bottom = 0.0
+text = "Ruins"
+horizontal_alignment = 1
+
+[node name="OldDock" type="ColorRect" parent="FutureObjects"]
+visibility_layer = 4
+offset_left = -100.0
+offset_top = 160.0
+offset_right = 100.0
+offset_bottom = 200.0
+color = Color(0.4, 0.35, 0.3, 1)
+
+[node name="MatureTree" type="ColorRect" parent="FutureObjects"]
+visibility_layer = 4
+offset_left = 90.0
+offset_top = -200.0
+offset_right = 140.0
+offset_bottom = -130.0
+color = Color(0.2, 0.5, 0.25, 1)
+
+[node name="Cafe" type="ColorRect" parent="FutureObjects"]
+visibility_layer = 4
+offset_left = 200.0
+offset_top = -180.0
+offset_right = 300.0
+offset_bottom = -120.0
+color = Color(0.6, 0.45, 0.35, 1)
+
+[node name="CafeLabel" type="Label" parent="FutureObjects/Cafe"]
+offset_left = 0.0
+offset_top = -14.0
+offset_right = 100.0
+offset_bottom = 0.0
+text = "Café"
+horizontal_alignment = 1

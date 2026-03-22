@@ -1,19 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://past_lena_scene"]
+[gd_scene load_steps=5 format=3 uid="uid://past_lena_scene"]
 
 [ext_resource type="Script" path="res://scripts/characters/past_lena.gd" id="1_past_lena"]
+[ext_resource type="Resource" path="res://resources/p1_controls.tres" id="2_controls"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_past"]
-size = Vector2(12, 12)
+size = Vector2(14, 20)
+
+[sub_resource type="RectangleShape2D" id="InteractionShape_past"]
+size = Vector2(40, 40)
 
 [node name="PastLena" type="CharacterBody2D"]
 visibility_layer = 8
+collision_layer = 8
 script = ExtResource("1_past_lena")
+controls = ExtResource("2_controls")
 move_speed = 120.0
 era = "past"
 
-[node name="Sprite" type="Sprite2D" parent="."]
-modulate = Color(0.831, 0.627, 0.337, 1)
+[node name="Sprite" type="ColorRect" parent="."]
+offset_left = -7.0
+offset_top = -10.0
+offset_right = 7.0
+offset_bottom = 10.0
 visibility_layer = 8
+color = Color(0.831, 0.627, 0.337, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -10.0
+offset_top = -24.0
+offset_right = 10.0
+offset_bottom = -11.0
+visibility_layer = 8
+text = "Past"
+horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_past")
@@ -21,4 +40,4 @@ shape = SubResource("RectangleShape2D_past")
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
-shape = SubResource("RectangleShape2D_past")
+shape = SubResource("InteractionShape_past")
