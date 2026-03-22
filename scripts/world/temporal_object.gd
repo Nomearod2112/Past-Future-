@@ -13,9 +13,39 @@ extends Node2D
 var past_instance: Node2D = null
 var future_instance: Node2D = null
 
+signal interacted(player: PlayerBase, temporal_object: TemporalObject)
+
+var _feedback_text: String = ""
+var _feedback_timer: float = 0.0
+
 
 func _ready() -> void:
 	_setup_instances()
+	# Register with WorldState if available
+	if GameManager.world_state:
+		GameManager.world_state.register_object(self)
+
+
+func _process(delta: float) -> void:
+	if _feedback_timer > 0:
+		_feedback_timer -= delta
+		if _feedback_timer <= 0:
+			_feedback_text = ""
+		queue_redraw()
+
+
+func _draw() -> void:
+	if _feedback_text != "":
+		var font := ThemeDB.fallback_font
+		var font_size := 10
+		var text_size := font.get_string_size(_feedback_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+		var alpha := clampf(_feedback_timer / 1.0, 0.0, 1.0)
+		var bg_rect := Rect2(
+			Vector2(-text_size.x / 2 - 4, -30 - text_size.y),
+			Vector2(text_size.x + 8, text_size.y + 4)
+		)
+		draw_rect(bg_rect, Color(0, 0, 0, 0.6 * alpha))
+		draw_string(font, Vector2(-text_size.x / 2, -28), _feedback_text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(1, 1, 0.8, alpha))
 
 
 ## Initialize past and future visual instances.
@@ -23,7 +53,6 @@ func _setup_instances() -> void:
 	if past_scene:
 		past_instance = past_scene.instantiate()
 		past_instance.set_meta("era", "past")
-		# Layer 2: Past-only objects
 		if past_instance is CanvasItem:
 			past_instance.visibility_layer = 2
 		add_child(past_instance)
@@ -31,7 +60,6 @@ func _setup_instances() -> void:
 	if future_scene:
 		future_instance = future_scene.instantiate()
 		future_instance.set_meta("era", "future")
-		# Layer 3: Future-only objects
 		if future_instance is CanvasItem:
 			future_instance.visibility_layer = 4
 		add_child(future_instance)
@@ -60,12 +88,20 @@ func _apply_properties(node: Node2D, properties: Dictionary) -> void:
 			node.set_meta(key, properties[key])
 
 
+## Show floating feedback text on interaction.
+func show_feedback(text: String) -> void:
+	_feedback_text = text
+	_feedback_timer = 2.0
+	queue_redraw()
+
+
 ## Override in subclasses for era-specific interactions.
 func interact(player: PlayerBase) -> void:
 	if player.era == "past":
 		_interact_past(player)
 	else:
 		_interact_future(player)
+	interacted.emit(player, self)
 
 
 ## Override: e.g., plant, build, hide.
