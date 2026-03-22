@@ -12,19 +12,16 @@ var current_interaction: TemporalObject = null
 
 @onready var interaction_area: Area2D = $InteractionArea
 var _prompt_text: String = ""
+var _scan_timer: float = 0.0
 
 
 func _ready() -> void:
-	print("[", era, "] PlayerBase._ready() — controls: ", controls, " interact action: ", controls.interact if controls else "NULL")
-	# Connect interaction area signals to detect nearby temporal objects
 	interaction_area.area_entered.connect(_on_interaction_area_entered)
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
 
 
 func _process(_delta: float) -> void:
-	# Handle interact/journal via Input singleton (works inside SubViewports)
 	if Input.is_action_just_pressed(controls.interact):
-		print("[", era, "] E/Enter pressed — nearby objects: ", can_interact_with.size())
 		if can_interact_with.size() > 0:
 			_interact_with_nearest()
 
@@ -59,10 +56,8 @@ func _draw() -> void:
 		draw_string(font, Vector2(-text_size.x / 2, -34), _prompt_text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(1, 1, 0.8))
 
 
-func _physics_process(_delta: float) -> void:
-	# Check interact here too since _process may not be called
+func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed(controls.interact):
-		print("[", era, "] INTERACT pressed (from physics_process) — nearby: ", can_interact_with.size())
 		if can_interact_with.size() > 0:
 			_interact_with_nearest()
 
@@ -72,6 +67,34 @@ func _physics_process(_delta: float) -> void:
 	).normalized()
 	velocity = direction * move_speed
 	move_and_slide()
+
+	# Fallback: poll for nearby temporal objects every 0.25s
+	# in case area_entered signals don't fire across scene boundaries
+	_scan_timer -= delta
+	if _scan_timer <= 0:
+		_scan_timer = 0.25
+		_scan_for_interactables()
+
+
+## Scan for temporal objects by checking distance (signal fallback).
+func _scan_for_interactables() -> void:
+	var found: Array[TemporalObject] = []
+	var all_temporal := get_tree().get_nodes_in_group("temporal_objects")
+	for node in all_temporal:
+		if node is TemporalObject:
+			var dist := global_position.distance_to(node.global_position)
+			if dist < 50.0:
+				found.append(node as TemporalObject)
+	# Sync the list
+	for obj in found:
+		if obj not in can_interact_with:
+			can_interact_with.append(obj)
+	var to_remove: Array[TemporalObject] = []
+	for obj in can_interact_with:
+		if obj not in found:
+			to_remove.append(obj)
+	for obj in to_remove:
+		can_interact_with.erase(obj)
 
 
 ## Interact with the nearest available temporal object.
@@ -112,10 +135,8 @@ func _get_nearest_interactable() -> TemporalObject:
 
 ## When our Area2D overlaps a temporal object's Area2D.
 func _on_interaction_area_entered(area: Area2D) -> void:
-	print("[", era, "] Area entered: ", area.name, " parent: ", area.get_parent().name)
 	var parent := area.get_parent()
 	if parent is TemporalObject:
-		print("[", era, "] Registered interactable: ", parent.object_id)
 		register_interactable(parent as TemporalObject)
 
 
@@ -123,5 +144,4 @@ func _on_interaction_area_entered(area: Area2D) -> void:
 func _on_interaction_area_exited(area: Area2D) -> void:
 	var parent := area.get_parent()
 	if parent is TemporalObject:
-		print("[", era, "] Unregistered interactable: ", parent.object_id)
 		unregister_interactable(parent as TemporalObject)

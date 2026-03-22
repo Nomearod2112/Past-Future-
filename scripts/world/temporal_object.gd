@@ -20,6 +20,7 @@ var _feedback_timer: float = 0.0
 
 
 func _ready() -> void:
+	add_to_group("temporal_objects")
 	_setup_instances()
 	# Register with WorldState if available
 	if GameManager.world_state:
