@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://harbor_district_scene"]
+[gd_scene load_steps=7 format=3 uid="uid://harbor_district_scene"]
 
 [ext_resource type="Script" path="res://scripts/world/tree_spot.gd" id="1_tree_spot"]
 [ext_resource type="Script" path="res://scripts/world/hiding_spot.gd" id="2_hiding_spot"]
 [ext_resource type="Script" path="res://scripts/world/letterbox_object.gd" id="3_letterbox"]
 [ext_resource type="Script" path="res://scripts/world/garden_note.gd" id="4_garden_note"]
+[ext_resource type="Script" path="res://scripts/world/examine_object.gd" id="5_examine"]
 
 [sub_resource type="CircleShape2D" id="InteractionCircle"]
-radius = 30.0
+radius = 40.0
 
 [node name="HarborDistrict" type="Node2D"]
 
@@ -33,19 +34,19 @@ polygon = PackedVector2Array(-640, 200, 640, 200, 640, 360, -640, 360)
 visibility_layer = 1
 position = Vector2(250, -200)
 color = Color(0.6, 0.5, 0.3, 0.8)
-polygon = PackedVector2Array(-60, -60, 60, -60, 60, -56, -56, -56, -56, 60, -60, 60)
+polygon = PackedVector2Array(-70, -70, 70, -70, 70, -66, -66, -66, -66, 70, -70, 70)
 
 [node name="GardenFence2" type="Polygon2D" parent="SharedTerrain"]
 visibility_layer = 1
 position = Vector2(250, -200)
 color = Color(0.6, 0.5, 0.3, 0.8)
-polygon = PackedVector2Array(56, -56, 60, -56, 60, 60, -60, 60, -60, 56, 56, 56)
+polygon = PackedVector2Array(66, -66, 70, -66, 70, 70, -70, 70, -70, 66, 66, 66)
 
 [node name="GardenSign" type="Polygon2D" parent="SharedTerrain"]
 visibility_layer = 1
-position = Vector2(250, -138)
+position = Vector2(250, -128)
 color = Color(0.8, 0.7, 0.4, 1)
-polygon = PackedVector2Array(-15, -6, 15, -6, 15, 6, -15, 6)
+polygon = PackedVector2Array(-20, -8, 20, -8, 20, 8, -20, 8)
 
 # ─── PAST-ONLY OBJECTS (Layer 2) ───
 
@@ -55,13 +56,19 @@ polygon = PackedVector2Array(-15, -6, 15, -6, 15, 6, -15, 6)
 visibility_layer = 2
 position = Vector2(-160, -160)
 color = Color(0.769, 0.486, 0.157, 1)
-polygon = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
+polygon = PackedVector2Array(-45, -35, 45, -35, 45, 40, -45, 40)
 
 [node name="OldHouseRoof" type="Polygon2D" parent="PastObjects"]
 visibility_layer = 2
 position = Vector2(-160, -160)
 color = Color(0.65, 0.35, 0.12, 1)
-polygon = PackedVector2Array(-48, -40, 48, -40, 0, -58)
+polygon = PackedVector2Array(-52, -35, 52, -35, 0, -55)
+
+[node name="OldHouseDoor" type="Polygon2D" parent="PastObjects"]
+visibility_layer = 2
+position = Vector2(-160, -130)
+color = Color(0.5, 0.3, 0.1, 1)
+polygon = PackedVector2Array(-8, -10, 8, -10, 8, 10, -8, 10)
 
 [node name="Dock" type="Polygon2D" parent="PastObjects"]
 visibility_layer = 2
@@ -69,11 +76,35 @@ position = Vector2(0, 180)
 color = Color(0.55, 0.38, 0.2, 1)
 polygon = PackedVector2Array(-100, -20, 100, -20, 100, 20, -100, 20)
 
+[node name="DockPillar1" type="Polygon2D" parent="PastObjects"]
+visibility_layer = 2
+position = Vector2(-60, 200)
+color = Color(0.45, 0.3, 0.15, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, 16, -4, 16)
+
+[node name="DockPillar2" type="Polygon2D" parent="PastObjects"]
+visibility_layer = 2
+position = Vector2(60, 200)
+color = Color(0.45, 0.3, 0.15, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, 16, -4, 16)
+
+[node name="Boat" type="Polygon2D" parent="PastObjects"]
+visibility_layer = 2
+position = Vector2(120, 240)
+color = Color(0.7, 0.5, 0.3, 1)
+polygon = PackedVector2Array(-20, -8, 20, -8, 16, 8, -16, 8)
+
 [node name="GardenGatePast" type="Polygon2D" parent="PastObjects"]
 visibility_layer = 2
-position = Vector2(250, -138)
+position = Vector2(250, -128)
 color = Color(0.5, 0.35, 0.2, 1)
-polygon = PackedVector2Array(-8, -4, 8, -4, 8, 4, -8, 4)
+polygon = PackedVector2Array(-10, -6, 10, -6, 10, 6, -10, 6)
+
+[node name="GardenGateLock" type="Polygon2D" parent="PastObjects"]
+visibility_layer = 2
+position = Vector2(250, -128)
+color = Color(0.7, 0.55, 0.1, 1)
+polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
 
 # ─── FUTURE-ONLY OBJECTS (Layer 4) ───
 
@@ -83,7 +114,19 @@ polygon = PackedVector2Array(-8, -4, 8, -4, 8, 4, -8, 4)
 visibility_layer = 4
 position = Vector2(-160, -160)
 color = Color(0.5, 0.45, 0.4, 1)
-polygon = PackedVector2Array(-40, -30, -10, -40, 40, -35, 40, 40, -40, 40)
+polygon = PackedVector2Array(-45, -25, -10, -35, 45, -30, 45, 40, -45, 40)
+
+[node name="RuinsRoof" type="Polygon2D" parent="FutureObjects"]
+visibility_layer = 4
+position = Vector2(-160, -160)
+color = Color(0.4, 0.35, 0.3, 1)
+polygon = PackedVector2Array(-48, -28, 30, -30, -10, -45)
+
+[node name="RuinsVines" type="Polygon2D" parent="FutureObjects"]
+visibility_layer = 4
+position = Vector2(-130, -160)
+color = Color(0.2, 0.45, 0.2, 0.6)
+polygon = PackedVector2Array(-3, -30, 3, -30, 5, 10, 8, 30, -2, 30, -5, 10)
 
 [node name="OldDock" type="Polygon2D" parent="FutureObjects"]
 visibility_layer = 4
@@ -91,23 +134,41 @@ position = Vector2(0, 180)
 color = Color(0.4, 0.35, 0.3, 1)
 polygon = PackedVector2Array(-100, -20, 80, -20, 90, 20, -100, 20)
 
+[node name="OldDockBroken" type="Polygon2D" parent="FutureObjects"]
+visibility_layer = 4
+position = Vector2(85, 195)
+color = Color(0.45, 0.4, 0.35, 0.5)
+polygon = PackedVector2Array(0, -10, 15, -8, 12, 5, -3, 8)
+
 [node name="Cafe" type="Polygon2D" parent="FutureObjects"]
 visibility_layer = 4
 position = Vector2(-350, -160)
 color = Color(0.6, 0.45, 0.35, 1)
-polygon = PackedVector2Array(-50, -30, 50, -30, 50, 30, -50, 30)
+polygon = PackedVector2Array(-55, -35, 55, -35, 55, 35, -55, 35)
 
 [node name="CafeRoof" type="Polygon2D" parent="FutureObjects"]
 visibility_layer = 4
 position = Vector2(-350, -160)
 color = Color(0.5, 0.35, 0.25, 1)
-polygon = PackedVector2Array(-55, -30, 55, -30, 0, -45)
+polygon = PackedVector2Array(-60, -35, 60, -35, 0, -50)
+
+[node name="CafeSign" type="Polygon2D" parent="FutureObjects"]
+visibility_layer = 4
+position = Vector2(-350, -200)
+color = Color(0.9, 0.8, 0.6, 1)
+polygon = PackedVector2Array(-18, -5, 18, -5, 18, 5, -18, 5)
 
 [node name="GardenGateFuture" type="Polygon2D" parent="FutureObjects"]
 visibility_layer = 4
-position = Vector2(250, -138)
+position = Vector2(250, -128)
 color = Color(0.45, 0.35, 0.25, 0.6)
-polygon = PackedVector2Array(-8, -4, 8, -4, 8, 4, -8, 4)
+polygon = PackedVector2Array(-10, -6, 10, -6, 10, 6, -10, 6)
+
+[node name="GardenGateRust" type="Polygon2D" parent="FutureObjects"]
+visibility_layer = 4
+position = Vector2(253, -125)
+color = Color(0.6, 0.4, 0.2, 0.4)
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
 # ─── INTERACTIVE TEMPORAL OBJECTS ───
 
@@ -115,7 +176,7 @@ polygon = PackedVector2Array(-8, -4, 8, -4, 8, 4, -8, 4)
 
 # Tree Spot — Part of Locked Garden puzzle. Past-Lena plants, Future sees mature tree.
 [node name="GardenTreeSpot" type="Node2D" parent="TemporalObjects"]
-position = Vector2(250, -200)
+position = Vector2(230, -210)
 script = ExtResource("1_tree_spot")
 object_id = "garden_tree"
 grid_position = Vector2i(5, -4)
@@ -125,22 +186,22 @@ puzzle_tag = "garden_tree_planted"
 [node name="PastVisual" type="Polygon2D" parent="TemporalObjects/GardenTreeSpot"]
 visibility_layer = 2
 color = Color(0.484, 0.549, 0.243, 0.6)
-polygon = PackedVector2Array(-8, -4, 8, -4, 8, 4, -8, 4)
+polygon = PackedVector2Array(-10, -6, 10, -6, 10, 6, -10, 6)
 
 [node name="PastLabel" type="Polygon2D" parent="TemporalObjects/GardenTreeSpot"]
 visibility_layer = 2
-position = Vector2(0, -10)
+position = Vector2(0, -12)
 color = Color(0.3, 0.5, 0.15, 1)
-polygon = PackedVector2Array(-3, -3, 3, -3, 0, -8)
+polygon = PackedVector2Array(-4, -4, 4, -4, 0, -10)
 
 [node name="FutureVisual" type="Polygon2D" parent="TemporalObjects/GardenTreeSpot"]
 visibility_layer = 4
-color = Color(0.2, 0.5, 0.25, 1)
-polygon = PackedVector2Array(-15, 0, 15, 0, 12, -10, 18, -15, 5, -12, 0, -25, -5, -12, -18, -15, -12, -10)
+color = Color(0.2, 0.5, 0.25, 0.4)
+polygon = PackedVector2Array(-10, 0, 10, 0, 8, -6, 0, -12, -8, -6)
 
 [node name="FutureTrunk" type="Polygon2D" parent="TemporalObjects/GardenTreeSpot"]
 visibility_layer = 4
-color = Color(0.45, 0.3, 0.15, 1)
+color = Color(0.45, 0.3, 0.15, 0.4)
 polygon = PackedVector2Array(-3, 0, 3, 0, 3, 10, -3, 10)
 
 [node name="InteractionArea" type="Area2D" parent="TemporalObjects/GardenTreeSpot"]
@@ -162,21 +223,21 @@ hidden_item_name = "garden key"
 [node name="PastVisual" type="Polygon2D" parent="TemporalObjects/GardenKeySpot"]
 visibility_layer = 2
 color = Color(0.55, 0.45, 0.3, 1)
-polygon = PackedVector2Array(-12, -8, 12, -8, 14, 8, -14, 8)
+polygon = PackedVector2Array(-14, -10, 14, -10, 16, 10, -16, 10)
 
 [node name="PastX" type="Polygon2D" parent="TemporalObjects/GardenKeySpot"]
 visibility_layer = 2
-color = Color(0.8, 0.6, 0.2, 0.5)
-polygon = PackedVector2Array(-2, -6, 2, -6, 2, 6, -2, 6)
+color = Color(0.8, 0.6, 0.2, 0.4)
+polygon = PackedVector2Array(-2, -8, 2, -8, 2, 8, -2, 8)
 
 [node name="FutureVisual" type="Polygon2D" parent="TemporalObjects/GardenKeySpot"]
 visibility_layer = 4
 color = Color(0.45, 0.4, 0.35, 1)
-polygon = PackedVector2Array(-12, -8, 12, -8, 14, 8, -14, 8)
+polygon = PackedVector2Array(-14, -10, 14, -10, 16, 10, -16, 10)
 
 [node name="FutureMoss" type="Polygon2D" parent="TemporalObjects/GardenKeySpot"]
 visibility_layer = 4
-color = Color(0.3, 0.5, 0.3, 0.4)
+color = Color(0.3, 0.5, 0.3, 0.3)
 polygon = PackedVector2Array(-10, -4, 0, -6, 10, -4, 8, 2, -8, 2)
 
 [node name="InteractionArea" type="Area2D" parent="TemporalObjects/GardenKeySpot"]
@@ -195,22 +256,28 @@ interaction_verb = "Use Letterbox"
 [node name="PastVisual" type="Polygon2D" parent="TemporalObjects/TownLetterbox"]
 visibility_layer = 2
 color = Color(0.91, 0.722, 0.294, 1)
-polygon = PackedVector2Array(-6, -18, 6, -18, 6, 0, -6, 0)
+polygon = PackedVector2Array(-8, -22, 8, -22, 8, 0, -8, 0)
 
 [node name="PastPost" type="Polygon2D" parent="TemporalObjects/TownLetterbox"]
 visibility_layer = 2
 color = Color(0.6, 0.5, 0.3, 1)
-polygon = PackedVector2Array(-2, 0, 2, 0, 2, 10, -2, 10)
+polygon = PackedVector2Array(-3, 0, 3, 0, 3, 14, -3, 14)
+
+[node name="PastFlag" type="Polygon2D" parent="TemporalObjects/TownLetterbox"]
+visibility_layer = 2
+position = Vector2(8, -18)
+color = Color(0.8, 0.2, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 8, 3, 0, 6)
 
 [node name="FutureVisual" type="Polygon2D" parent="TemporalObjects/TownLetterbox"]
 visibility_layer = 4
 color = Color(0.722, 0.639, 0.502, 1)
-polygon = PackedVector2Array(-6, -18, 6, -18, 6, 0, -6, 0)
+polygon = PackedVector2Array(-8, -22, 8, -22, 8, 0, -8, 0)
 
 [node name="FuturePost" type="Polygon2D" parent="TemporalObjects/TownLetterbox"]
 visibility_layer = 4
 color = Color(0.5, 0.45, 0.35, 1)
-polygon = PackedVector2Array(-2, 0, 2, 0, 2, 10, -2, 10)
+polygon = PackedVector2Array(-3, 0, 3, 0, 3, 14, -3, 14)
 
 [node name="InteractionArea" type="Area2D" parent="TemporalObjects/TownLetterbox"]
 
@@ -228,24 +295,89 @@ interaction_verb = "Read Note"
 [node name="FutureVisual" type="Polygon2D" parent="TemporalObjects/GardenNote"]
 visibility_layer = 4
 color = Color(0.9, 0.85, 0.7, 1)
-polygon = PackedVector2Array(-6, -8, 6, -8, 6, 8, -6, 8)
+polygon = PackedVector2Array(-8, -10, 8, -10, 8, 10, -8, 10)
 
 [node name="FutureText" type="Polygon2D" parent="TemporalObjects/GardenNote"]
 visibility_layer = 4
 color = Color(0.3, 0.3, 0.3, 0.6)
-polygon = PackedVector2Array(-4, -5, 4, -5, 4, -4, -4, -4)
+polygon = PackedVector2Array(-5, -6, 5, -6, 5, -5, -5, -5)
 
 [node name="FutureText2" type="Polygon2D" parent="TemporalObjects/GardenNote"]
 visibility_layer = 4
 color = Color(0.3, 0.3, 0.3, 0.6)
-polygon = PackedVector2Array(-4, -2, 3, -2, 3, -1, -4, -1)
+polygon = PackedVector2Array(-5, -3, 4, -3, 4, -2, -5, -2)
 
 [node name="FutureText3" type="Polygon2D" parent="TemporalObjects/GardenNote"]
 visibility_layer = 4
 color = Color(0.3, 0.3, 0.3, 0.6)
-polygon = PackedVector2Array(-4, 1, 4, 1, 4, 2, -4, 2)
+polygon = PackedVector2Array(-5, 0, 5, 0, 5, 1, -5, 1)
+
+[node name="FutureGlow" type="Polygon2D" parent="TemporalObjects/GardenNote"]
+visibility_layer = 4
+color = Color(1, 0.9, 0.5, 0.15)
+polygon = PackedVector2Array(-14, -16, 14, -16, 14, 16, -14, 16)
 
 [node name="InteractionArea" type="Area2D" parent="TemporalObjects/GardenNote"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TemporalObjects/GardenNote/InteractionArea"]
+shape = SubResource("InteractionCircle")
+
+# Garden Gate — Puzzle endpoint. Shows locked/unlocked state.
+[node name="GardenGate" type="Node2D" parent="TemporalObjects"]
+position = Vector2(250, -128)
+script = ExtResource("5_examine")
+object_id = "garden_gate"
+grid_position = Vector2i(5, -3)
+interaction_verb = "Examine Gate"
+past_description = "The garden gate is locked tight. There must be a key somewhere..."
+future_description = "Rusted shut. If only someone had left a key decades ago..."
+
+[node name="InteractionArea" type="Area2D" parent="TemporalObjects/GardenGate"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TemporalObjects/GardenGate/InteractionArea"]
+shape = SubResource("InteractionCircle")
+
+# Old House / Ruins — Examinable landmark.
+[node name="HouseExamine" type="Node2D" parent="TemporalObjects"]
+position = Vector2(-160, -140)
+script = ExtResource("5_examine")
+object_id = "old_house"
+grid_position = Vector2i(-3, -3)
+interaction_verb = "Examine"
+past_description = "Old Marta's cottage. She's lived here since the 50s."
+future_description = "The cottage is barely standing. Vines crawl up the walls."
+
+[node name="InteractionArea" type="Area2D" parent="TemporalObjects/HouseExamine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TemporalObjects/HouseExamine/InteractionArea"]
+shape = SubResource("InteractionCircle")
+
+# Dock — Examinable landmark.
+[node name="DockExamine" type="Node2D" parent="TemporalObjects"]
+position = Vector2(0, 180)
+script = ExtResource("5_examine")
+object_id = "town_dock"
+grid_position = Vector2i(0, 4)
+interaction_verb = "Examine"
+past_description = "The town dock. Fishing boats come and go all day."
+future_description = "The old dock is weathered but still standing. No boats anymore."
+
+[node name="InteractionArea" type="Area2D" parent="TemporalObjects/DockExamine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TemporalObjects/DockExamine/InteractionArea"]
+shape = SubResource("InteractionCircle")
+
+# Cafe (Future only) — Examinable landmark.
+[node name="CafeExamine" type="Node2D" parent="TemporalObjects"]
+position = Vector2(-350, -160)
+script = ExtResource("5_examine")
+object_id = "future_cafe"
+grid_position = Vector2i(-7, -3)
+interaction_verb = "Examine"
+past_description = "Nothing here yet. Just an empty lot."
+future_description = "A trendy cafe — used to be the post office until 2003."
+
+[node name="InteractionArea" type="Area2D" parent="TemporalObjects/CafeExamine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TemporalObjects/CafeExamine/InteractionArea"]
 shape = SubResource("InteractionCircle")
