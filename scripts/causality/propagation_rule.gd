@@ -27,7 +27,7 @@ func _get_replaced_objects(event: CausalEvent) -> Array[String]:
 
 
 ## Compute properties for the future object based on event and nearby interactions.
-func _compute_properties(event: CausalEvent, nearby: Array[CausalEvent]) -> Dictionary:
+func _compute_properties(_event: CausalEvent, nearby: Array[CausalEvent]) -> Dictionary:
 	var props := {}
 	for n in nearby:
 		if n.type == CausalEvent.Type.REDIRECT_WATER:
