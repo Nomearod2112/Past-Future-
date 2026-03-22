@@ -23,6 +23,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Handle interact/journal via Input singleton (works inside SubViewports)
 	if Input.is_action_just_pressed(controls.interact):
+		print("[", era, "] E/Enter pressed — nearby objects: ", can_interact_with.size())
 		if can_interact_with.size() > 0:
 			_interact_with_nearest()
 
@@ -104,8 +105,10 @@ func _get_nearest_interactable() -> TemporalObject:
 
 ## When our Area2D overlaps a temporal object's Area2D.
 func _on_interaction_area_entered(area: Area2D) -> void:
+	print("[", era, "] Area entered: ", area.name, " parent: ", area.get_parent().name)
 	var parent := area.get_parent()
 	if parent is TemporalObject:
+		print("[", era, "] Registered interactable: ", parent.object_id)
 		register_interactable(parent as TemporalObject)
 
 
@@ -113,4 +116,5 @@ func _on_interaction_area_entered(area: Area2D) -> void:
 func _on_interaction_area_exited(area: Area2D) -> void:
 	var parent := area.get_parent()
 	if parent is TemporalObject:
+		print("[", era, "] Unregistered interactable: ", parent.object_id)
 		unregister_interactable(parent as TemporalObject)
