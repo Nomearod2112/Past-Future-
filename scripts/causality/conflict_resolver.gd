@@ -17,7 +17,7 @@ static func resolve(delta: FutureDelta, future_lena_position: Vector2, future_le
 
 ## Check if the player is at or near the delta position.
 static func _is_player_at_position(player_grid: Vector2i, delta_pos: Vector2i) -> bool:
-	return player_grid.distance_to(delta_pos) < 2
+	return Vector2(player_grid).distance_to(Vector2(delta_pos)) < 2.0
 
 
 ## Check if a delta destroys or removes something.
