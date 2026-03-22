@@ -10,6 +10,14 @@ extends TemporalObject
 
 var _item_hidden: bool = false
 var _item_found: bool = false
+var _past_visual: Polygon2D = null
+var _future_visual: Polygon2D = null
+
+
+func _ready() -> void:
+	super._ready()
+	_past_visual = get_node_or_null("PastVisual") as Polygon2D
+	_future_visual = get_node_or_null("FutureVisual") as Polygon2D
 
 
 func _interact_past(player: PlayerBase) -> void:
@@ -21,8 +29,8 @@ func _interact_past(player: PlayerBase) -> void:
 	show_feedback("Hidden " + hidden_item_name + " in " + container_type + "!")
 
 	# Update visual to show disturbed ground
-	var past_visual: Polygon2D = $PastVisual
-	past_visual.color = Color(0.5, 0.4, 0.25, 1)
+	if _past_visual:
+		_past_visual.color = Color(0.5, 0.4, 0.25, 1)
 
 	# Create the causal event
 	var params := {
@@ -57,8 +65,8 @@ func _interact_future(_player: PlayerBase) -> void:
 	show_feedback("Found the " + hidden_item_name + "!")
 
 	# Update visual
-	var future_visual: Polygon2D = $FutureVisual
-	future_visual.color = Color(0.4, 0.35, 0.25, 1)
+	if _future_visual:
+		_future_visual.color = Color(0.4, 0.35, 0.25, 1)
 
 	# Unlock awareness for the past
 	var fragment := InfoFragment.new()

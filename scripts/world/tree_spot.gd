@@ -7,6 +7,12 @@ extends TemporalObject
 @export var puzzle_tag: String = ""
 
 var _planted: bool = false
+var _past_visual: Polygon2D = null
+
+
+func _ready() -> void:
+	super._ready()
+	_past_visual = get_node_or_null("PastVisual") as Polygon2D
 
 
 func _interact_past(player: PlayerBase) -> void:
@@ -18,12 +24,12 @@ func _interact_past(player: PlayerBase) -> void:
 	show_feedback("Planted a sapling!")
 
 	# Change the past visual to show a small sapling
-	var past_visual: Polygon2D = $PastVisual
-	past_visual.color = Color(0.3, 0.6, 0.2, 1)
-	past_visual.polygon = PackedVector2Array([
-		Vector2(-4, 0), Vector2(4, 0), Vector2(3, -8),
-		Vector2(6, -10), Vector2(0, -16), Vector2(-6, -10), Vector2(-3, -8)
-	])
+	if _past_visual:
+		_past_visual.color = Color(0.3, 0.6, 0.2, 1)
+		_past_visual.polygon = PackedVector2Array([
+			Vector2(-4, 0), Vector2(4, 0), Vector2(3, -8),
+			Vector2(6, -10), Vector2(0, -16), Vector2(-6, -10), Vector2(-3, -8)
+		])
 
 	# Create the causal event
 	var params := {"sapling_type": "oak", "puzzle_tag": puzzle_tag}
