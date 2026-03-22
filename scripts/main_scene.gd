@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 ## Main scene controller — loads the level into both viewports,
 ## shares World2D between them, and registers players with GameManager.

@@ -5,13 +5,20 @@
 [ext_resource type="PackedScene" path="res://scenes/characters/past_lena.tscn" id="3_past_lena"]
 [ext_resource type="PackedScene" path="res://scenes/characters/future_lena.tscn" id="4_future_lena"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_main")
 
 [node name="WorldState" type="Node" parent="."]
 script = ExtResource("1_world")
 
 [node name="SplitScreen" type="HBoxContainer" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,6 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PastViewportContainer" type="SubViewportContainer" parent="SplitScreen"]
+layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
@@ -34,10 +42,12 @@ render_target_update_mode = 4
 position = Vector2(-50, 50)
 
 [node name="Divider" type="ColorRect" parent="SplitScreen"]
+layout_mode = 2
 custom_minimum_size = Vector2(4, 0)
 color = Color(0.941, 0.78, 0.369, 1)
 
 [node name="FutureViewportContainer" type="SubViewportContainer" parent="SplitScreen"]
+layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
